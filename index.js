@@ -5,6 +5,7 @@ const { authenticate } = require("./authMiddleware")
 const authRoutes = require("./routes/authRoutes")
 const incomeRoutes = require("./routes/incomeRoutes")
 const expenseRoutes = require("./routes/expenseRoutes")
+const {validateRegistration, validateLogin} = require("./authMiddleware")
 
 
 connectDB()
@@ -19,10 +20,10 @@ app.use("/api", authRoutes)
 app.use("/api", incomeRoutes)
 app.use("/api", expenseRoutes)
 
- app.post("/register", authenticate, (request, response, )=>{
+ app.post("/register", validateRegistration, (request, response, )=>{
  return response.status(200).json({message : "welcome to our server"})
  })
 
- app.post("/login",(request, response)=>{
+ app.post("/login", authenticate, validateLogin, (request, response)=>{
     return response.status(200).json({message : "You are now logged in"})
     })
